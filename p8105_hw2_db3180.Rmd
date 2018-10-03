@@ -29,12 +29,25 @@ Answer the following questions using these data:
 
 How many distinct stations are there? Note that stations are identified both by name and by line (e.g. 125th St A/B/C/D; 125st 1; 125st 4/5); the distinct function may be useful here.
 
-The number of distint stations are: 'nrow(distict(NYC_transport, line, station_name))'
+The number of distint stations are: `r nrow(distinct(NYC_transport, line, station_name))`
 
-How many stations are ADA compliant?
-The number of stations that are ADA compliant are: '
+The number of stations that are ADA compliant are: `r nrow(distinct(NYC_transport, ada = TRUE))`
 
-What proportion of station entrances / exits without vending allow entrance?
+
+```{r echo = FALSE}
+prop_vend = 
+(nrow(
+  NYC_transport %>% 
+  filter(entry == TRUE) %>%
+  filter(vending == "NO")
+)
+  /
+nrow( NYC_transport %>% 
+  filter(vending == "NO")
+))
+```
+The proportion of station entrances/exits without vending allow entrances is:
+`r prop_vend`
 
 
 
