@@ -33,7 +33,6 @@ The number of distint stations are: `r nrow(distinct(NYC_transport, line, statio
 
 The number of stations that are ADA compliant are: `r nrow(distinct(NYC_transport, ada = TRUE))`
 
-
 ```{r echo = FALSE}
 prop_vend = 
 (nrow(
@@ -49,6 +48,7 @@ nrow( NYC_transport %>%
 The proportion of station entrances/exits without vending allow entrances is:
 `r prop_vend`
 
+## Problem 2 
 
 
 
