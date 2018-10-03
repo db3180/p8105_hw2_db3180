@@ -1,0 +1,41 @@
+---
+title: "P8015_hw2_db3180"
+author: "Divya Bisht"
+date: "10/2/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+## Problem 1
+
+Importing NYC Transit data
+```{r}
+NYC_transport = read_csv("./NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>%
+janitor::clean_names() %>% 
+select(line, station_name, station_latitude, station_longitude, route1, route2, route3, route4, route5, route6, route7, route8, route9, route10, route11, entry, vending,       
+       entrance_type, ada) %>%
+
+mutate(entry = recode(entry, "YES" = TRUE, "NO" = FALSE))
+
+NYC_transport
+```
+
+This dataset has 19 variables (line, station_name, station_latitude, station_longitude, route1, route2, route3, route4, route5, route6, route7, route8, route9, route10, route11, entry, vending, entrance_type, ada). The cleaning so far has included using the janitor function. There are 1868 rows and 19 columns. The data are tidy, but the route8 and route9 data are numeric variables while all the other route data are factor variables. 
+
+Answer the following questions using these data:
+
+How many distinct stations are there? Note that stations are identified both by name and by line (e.g. 125th St A/B/C/D; 125st 1; 125st 4/5); the distinct function may be useful here.
+
+The number of distint stations are: 'nrow(distict(NYC_transport, line, station_name))'
+
+How many stations are ADA compliant?
+The number of stations that are ADA compliant are: '
+
+What proportion of station entrances / exits without vending allow entrance?
+
+
+
+
