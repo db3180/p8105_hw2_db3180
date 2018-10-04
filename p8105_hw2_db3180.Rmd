@@ -103,13 +103,7 @@ preci_combined = full_join(precip_data16, precip_data17) %>%
 mutate(month = month.name[month])
 ```
 
-The above data show precipitation per month in 2016 and 2017. October 2016 and 2017 had 
 
-
-`r (precip_combined, total.xfilter(precip_combined, month == "October")` inches of rain, for example. 
-The total precipitation for 2017 was `r`
-
-The median number of sports balls in a dumpster in 2016 were: ``
 
 ##Problem 3
 ```{r}
@@ -117,14 +111,40 @@ devtools::install_github("p8105/p8105.datasets")
 
 library(p8105.datasets)
 
-
 brfss_data = brfss_smart2010 %>%
   janitor::clean_names() %>%
   filter(topic == "Overall Health") %>% 
   select(-class, -topic, -question, -sample_size, -(confidence_limit_low:geo_location)) %>%
-  rename(state = locationabbr, county = locationdesc)
-  
+  rename(state = locationabbr, county = locationdesc) %>%
+  spread(key = response, value = data_value) %>%
+  janitor::clean_names() %>%
+  mutate(proportion_responses = (excellent + very_good)/100)
 ```
 
+```{r}
+unique_location = 
+(nrow(
+  brfss_data %>%
+   distinct(state, county)))
+```
 
+There are `r unique_location` in the dataset
 
+```{r}
+unique_state = 
+(nrow(
+  brfss_data %>%
+   distinct(state)))
+
+```
+
+There are `r unique_state`. This is because the list includes Washington, DC. 
+
+```{r}
+state_most = 
+  brfss_data %>%
+  count(state) %>%
+  arrange(desc(n))
+```
+
+New Jersey has been mentioned the most-146 times. 
