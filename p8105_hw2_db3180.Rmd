@@ -77,8 +77,28 @@ nrow(
 ## Problem 2 
 Import Mr. TrashWheel
 ```{r}
-#library(readxl)
-#trash_data = read_excel ("p8105_hw2_db3180/HealthyHarborWaterWheelTotal2017-9-26.xlsx", 
+library(readxl)
+trash_data = read_excel("./HealthyHarborWaterWheelTotals2017-9-26.xlsx", sheet =  "Mr. Trash Wheel", 
+  range = "A2:N258") %>%
+  janitor::clean_names() %>%
+  filter(!is.na(dumpster)) %>%
+  mutate(sports_balls = round(sports_balls)) %>%
+  mutate(sports_balls = as.integer(sports_balls))
+  
 ```
 
+Precipitation data
+```{r}
+precip_data16 = read_excel("./HealthyHarborWaterWheelTotals2017-9-26.xlsx", 
+    sheet = "2016 Precipitation", 
+    range = "A2:B14") %>%
+    janitor::clean_names()
+
+precip_data17 = read_excel("./HealthyHarborWaterWheelTotals2017-9-26.xlsx", 
+    sheet = "2017 Precipitation", 
+    range = "A2:B14") %>%
+    janitor::clean_names() %>% 
+    filter(!is.na(total))
+    
+```
 
