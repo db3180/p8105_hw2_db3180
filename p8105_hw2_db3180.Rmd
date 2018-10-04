@@ -2,7 +2,7 @@
 title: "P8015_hw2_db3180"
 author: "Divya Bisht"
 date: "10/2/2018"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -33,7 +33,7 @@ The number of distint stations are: `r nrow(distinct(NYC_transport, line, statio
 
 The number of stations that are ADA compliant are: `r nrow(distinct(NYC_transport, ada = TRUE))`
 
-```{r echo = FALSE}
+```{r}
 prop_vend = 
 (nrow(
   NYC_transport %>% 
@@ -41,14 +41,44 @@ prop_vend =
   filter(vending == "NO")
 )
   /
-nrow( NYC_transport %>% 
+nrow(NYC_transport %>% 
   filter(vending == "NO")
 ))
 ```
 The proportion of station entrances/exits without vending allow entrances is:
 `r prop_vend`
 
-## Problem 2 
+Reformatting data
+```{r}
+NYC_tidy_transport = gather(NYC_transport, key = route_number, value = route_name, route1:route11)
+```
 
+Stations of the A train: 
+```{r}
+nrow(
+  NYC_tidy_transport %>%
+   distinct(line, station_name, route_name) %>% 
+   filter(route_name == "A")
+   )
+
+```
+
+Number of A train stations are ADA compliant
+```{r}
+nrow(
+  NYC_tidy_transport %>%
+   distinct(line, station_name, route_name, ada) %>% 
+   filter(route_name == "A") %>%
+   filter(ada == TRUE))
+
+```
+
+
+## Problem 2 
+Import Mr. TrashWheel
+```{r}
+#library(readxl)
+#trash_data = read_excel ("p8105_hw2_db3180/HealthyHarborWaterWheelTotal2017-9-26.xlsx", 
+```
 
 
