@@ -60,7 +60,6 @@ nrow(
    distinct(line, station_name, route_name) %>% 
    filter(route_name == "A")
    )
-
 ```
 
 Number of A train stations are ADA compliant
@@ -70,7 +69,6 @@ nrow(
    distinct(line, station_name, route_name, ada) %>% 
    filter(route_name == "A") %>%
    filter(ada == TRUE))
-
 ```
 
 
@@ -78,27 +76,38 @@ nrow(
 Import Mr. TrashWheel
 ```{r}
 library(readxl)
-trash_data = read_excel("./HealthyHarborWaterWheelTotals2017-9-26.xlsx", sheet =  "Mr. Trash Wheel", 
+trash_data = read_excel("./HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet =  "Mr. Trash Wheel", 
   range = "A2:N258") %>%
   janitor::clean_names() %>%
   filter(!is.na(dumpster)) %>%
   mutate(sports_balls = round(sports_balls)) %>%
   mutate(sports_balls = as.integer(sports_balls))
-  
 ```
 
 Precipitation data
 ```{r}
-precip_data16 = read_excel("./HealthyHarborWaterWheelTotals2017-9-26.xlsx", 
+precip_data16 = read_excel("./HealthyHarborWaterWheelTotals2018-7-28.xlsx", 
     sheet = "2016 Precipitation", 
     range = "A2:B14") %>%
-    janitor::clean_names()
+    janitor::clean_names() %>% 
+    mutate(year = 2016)
 
-precip_data17 = read_excel("./HealthyHarborWaterWheelTotals2017-9-26.xlsx", 
+precip_data17 = read_excel("./HealthyHarborWaterWheelTotals2018-7-28.xlsx", 
     sheet = "2017 Precipitation", 
     range = "A2:B14") %>%
     janitor::clean_names() %>% 
-    filter(!is.na(total))
-    
+    filter(!is.na(total)) %>%
+    mutate(year = 2017)
+
+precip_combined = left_join(precip_data16, precip_data17, by = "month") %>%
+mutate(month = as.character(month.name))
 ```
+The above data show precipitation per month in 2016 and 2017. October 2016 and 2017 had 
+`r (precip_combined, total.xfilter(precip_combined, month == "October")` inches of rain, for example. 
+The total precipitation for 2017 was `r`
+
+The median number of sports balls in a dumpster in 2016 were: ``
+
+
+
 
