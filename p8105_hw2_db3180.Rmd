@@ -99,15 +99,32 @@ precip_data17 = read_excel("./HealthyHarborWaterWheelTotals2018-7-28.xlsx",
     filter(!is.na(total)) %>%
     mutate(year = 2017)
 
-precip_combined = left_join(precip_data16, precip_data17, by = "month") %>%
-mutate(month = as.character(month.name))
+preci_combined = full_join(precip_data16, precip_data17) %>%
+mutate(month = month.name[month])
 ```
+
 The above data show precipitation per month in 2016 and 2017. October 2016 and 2017 had 
+
+
 `r (precip_combined, total.xfilter(precip_combined, month == "October")` inches of rain, for example. 
 The total precipitation for 2017 was `r`
 
 The median number of sports balls in a dumpster in 2016 were: ``
 
+##Problem 3
+```{r}
+devtools::install_github("p8105/p8105.datasets")
+
+library(p8105.datasets)
+
+
+brfss_data = brfss_smart2010 %>%
+  janitor::clean_names() %>%
+  filter(topic == "Overall Health") %>% 
+  select(-class, -topic, -question, -sample_size, -(confidence_limit_low:geo_location)) %>%
+  rename(state = locationabbr, county = locationdesc)
+  
+```
 
 
 
