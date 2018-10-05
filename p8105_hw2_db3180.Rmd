@@ -146,7 +146,7 @@ unique_state =
 
 ```
 
-There are `r unique_state`. This is because the list includes Washington, DC. 
+There are `r unique_state` unique states in the dataset. This is because the list includes Washington, DC. 
 
 ```{r}
 state_most = 
