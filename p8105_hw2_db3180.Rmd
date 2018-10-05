@@ -71,8 +71,8 @@ nrow(
    filter(ada == TRUE))
 ```
 
-
 ## Problem 2 
+
 Import Mr. TrashWheel
 ```{r}
 library(readxl)
@@ -103,7 +103,15 @@ preci_combined = full_join(precip_data16, precip_data17) %>%
 mutate(month = month.name[month])
 ```
 
+The precipitation data above describe the monthly precipitation amounts in both 2016/2017. Both datasets have 12 rows and 3 columns. In 2017, the total precipitation was `r sum(precip_data17$total)`. 
+```{r}
+median_sports = trash_data %>%
+filter(year == 2016) %>%
+  pull(sports_balls) %>% 
+median(na.rm = TRUE)
+```
 
+The median number of sports balls in a dumpster in 2016: `r median_sports`
 
 ##Problem 3
 ```{r}
@@ -147,4 +155,32 @@ state_most =
   arrange(desc(n))
 ```
 
-New Jersey has been mentioned the most-146 times. 
+New Jersey has been mentioned the most: 146 times. 
+
+```{r}
+excellent_2002 = brfss_data %>%
+filter(year == 2002) %>%
+  pull(excellent) %>% 
+median(na.rm = TRUE)
+```
+The median value of the "Excellent" response value is `r excellent_2002`. 
+
+Histogram:
+```{r}
+brfss_data %>%
+  filter(year == 2002) %>%
+  ggplot(aes(x = excellent)) + 
+  geom_histogram()
+```
+
+Scatterplot: 
+```{r}
+brfss_data %>%
+  filter(county == "NY - New York County" | county == "NY - Queens County") %>%
+  ggplot(aes(x = excellent, y = year)) + 
+  geom_point(aes(color = county))
+```
+
+
+
+
